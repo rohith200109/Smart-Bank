@@ -76,7 +76,7 @@
 
 <div class="login-form">
     <h2>Login Form</h2>
-    <bf:form action="createaccount" modelAttribute="acc" onsubmit="return LoginValidate(this)" >
+    <bf:form action="createaccount" modelAttribute="acc" onsubmit="return LoginValidate(this)" enctype="multipart/form-data">
         <label>Customer Name</label>
         <input type="text" name="custName" /><span id="errName"/>
         
@@ -95,11 +95,18 @@
         <label >Address</label>
            <bf:input type="text"  path="address"/> <span id="errAddress"/> 
            
+        <label >PanCard</label>
+           <bf:input type="file"     path="panCard"  /> 
+            
+        <label >Aadhaar Card</label>
+           <bf:input type="file"  path="aadhar" />
+           
         <label >Minimum Amount </label>
            <bf:input type="text"  path="Amount" placeholder="Minimum amount 500" /> <span id="errAmount"/>
            
         <label >Date of Birth</label>
         <bf:input type="datetime-local"  path="dob" /> <span id="errDob"/>
+        
         
         <div class="account-type">
             <label for="account">Account Type</label>
