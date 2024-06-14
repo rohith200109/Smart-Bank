@@ -30,7 +30,7 @@ public class SmartBankControler {
 
 	@GetMapping("/home")
 	public String home() {
-		return "home";
+		return "home.jsp";
 	}
 
 	@GetMapping("createaccount")
