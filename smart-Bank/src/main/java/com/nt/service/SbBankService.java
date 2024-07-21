@@ -16,19 +16,20 @@ public class SbBankService {
 private	SbAccountrepo sbrepo;
 
 	
-	
-	public String  accountSaving(SbAccount obj) 
+public String  accountSaving(SbAccount obj) 
 	{
-		Optional<SbAccount> byId = sbrepo.findById((int) sbrepo.count());
-		if(byId.isPresent()) {
-			Long num=byId.get().getAcNumber();
-			obj.setAcNumber(++num);
+		Optional<Integer> byId = Optional.ofNullable(sbrepo.accountchecking(obj.getAadhaarNumber()));
+		if(!byId.isPresent()) {
+			Long num=10000000L;
+			Long count=sbrepo.countRecords();
+			obj.setAcNumber(num+ ++(count));
+			sbrepo.save(obj);
+			return "Account Created";
 		}
 		else {
-		obj.setAcNumber(10000001L);
+		return"Exists"; 
 		}
-		sbrepo.save(obj);
-		return "Account Created";
+		
 	}
 	
 	public Long amountdeposit(SbAccount obj)
@@ -42,20 +43,24 @@ private	SbAccountrepo sbrepo;
 		break;
 	}
 	return amount;
-
 	}
+
+
+	
 	public Long amountWithdraw(SbAccount obj)
 	{
 		List<SbAccount> custmor =	sbrepo.findByAcNumber(obj.getAcNumber());
 		Long amount=0L;
 		for(SbAccount element:custmor) {
+			if(element.getAmount()>=obj.getAmount()) {
 			amount=element.getAmount()-obj.getAmount();
 			element.setAmount(amount);
 			sbrepo.save(element);
 			break;
+			}
+			else return null;
 		}
 		return amount;
-		
 	}
 	
 	public SbAccount checkBalance(SbAccount obj) {
